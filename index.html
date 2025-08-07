@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Go Galactic</title>
+  <style>
+    :root {
+      --primary-color: #0a192f;
+      --accent-blue: #007bff;
+      --text-light: #ffffff;
+      --bg-light: #f3f4f6;
+      --card-bg: #1e293b;
+      --transition-speed: 0.3s;
+      --rounded: 12px;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--primary-color);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    nav a {
+      margin-left: 1.5rem;
+      color: #00ffae;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4rem 2rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .hero-text h1 {
+      font-size: 2.5rem;
+    }
+
+    .highlight {
+      background-color: var(--accent-blue);
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--rounded);
+      color: white;
+    }
+
+    .cta-buttons {
+      margin-top: 2rem;
+    }
+
+    .cta-buttons button {
+      padding: 1rem 2rem;
+      margin-right: 1rem;
+      border: none;
+      border-radius: var(--rounded);
+      font-weight: bold;
+      cursor: pointer;
+      transition: background var(--transition-speed);
+    }
+
+    .start-button {
+      background: white;
+      color: #000;
+    }
+
+    .results-button {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+
+    .video-preview {
+      max-width: 500px;
+      border-radius: var(--rounded);
+      overflow: hidden;
+    }
+
+    .features {
+      background: var(--bg-light);
+      color: black;
+      padding: 4rem 2rem;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-box {
+      background: white;
+      border-radius: var(--rounded);
+      padding: 2rem;
+      margin: 1rem auto;
+      max-width: 800px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .collapsible {
+      cursor: pointer;
+      padding: 1rem 0;
+      font-weight: bold;
+    }
+
+    .content {
+      display: none;
+      padding: 1rem 0;
+    }
+
+    .active + .content {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Go Galactic</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Get in touch</a>
+      <a href="#">About/Mission</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>We <span class="highlight">partner</span> with packaging business owners at every stage of their journey</h1>
+      <p>"You build the perfect product, we build the acquisition department that gets perfect customers at 25:1 ROI"</p>
+      <div class="cta-buttons">
+        <button class="start-button">Start Growing</button>
+        <button class="results-button">See Our Results</button>
+      </div>
+    </div>
+    <div class="video-preview">
+      <img src="video-thumbnail.jpg" alt="Video" style="width: 100%" />
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>A simple, yet effective five step process</h2>
+    <div class="feature-box">
+      <div class="collapsible" onclick="toggleCollapse(this)">1. New Offer Model</div>
+      <div class="content">
+        <p>We’ll upgrade your offer to attract high-paying long-term clients. Then we’ll help you structure high-value 12-month deals.</p>
+      </div>
+    </div>
+    <div class="feature-box">
+      <div class="collapsible" onclick="toggleCollapse(this)">2. Automate Customer Acquisition</div>
+      <div class="content">
+        <p>Our automation system handles your acquisition while you scale operations and quality.</p>
+      </div>
+    </div>
+    <!-- Add more collapsible sections if needed -->
+  </section>
+
+  <script>
+    function toggleCollapse(el) {
+      el.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
