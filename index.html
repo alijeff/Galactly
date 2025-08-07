@@ -2,177 +2,257 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Go Galactic</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Galactly – Coming Soon</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
   <style>
     :root {
-      --primary-color: #0a192f;
-      --accent-blue: #007bff;
-      --text-light: #ffffff;
-      --bg-light: #f3f4f6;
-      --card-bg: #1e293b;
-      --transition-speed: 0.3s;
-      --rounded: 12px;
+      --bg-dark: #000;
+      --text-light: #c9d1d9;
+      --radius: 8px;
+      --fog-intensity: 0.07;    /* further dialed down */
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden; background: var(--bg-dark);
+      font-family: 'Inter', sans-serif; position: relative;
     }
 
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: var(--primary-color);
-      color: var(--text-light);
-      line-height: 1.6;
+    /* Fog Blob */
+    .fog-container { position: fixed; inset: 0; z-index: 1; }
+    .fog-blob {
+      position: absolute; width: 300%; height: 300%;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,var(--fog-intensity)), transparent 60%),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,calc(var(--fog-intensity)/2)), transparent 70%);
+      filter: blur(100px);
+      animation: blob-move 30s infinite alternate ease-in-out;
+    }
+    @keyframes blob-move {
+      0%   { transform: translate(-40%,-40%) scale(1); }
+      50%  { transform: translate(-70%,-20%) scale(1.4); }
+      100% { transform: translate(-40%,0%)     scale(1); }
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2rem;
+    /* Circuit Overlay */
+    .circuit {
+      position: fixed; inset: 0;
+      background: url('assets/circuit-pattern.svg') center/cover no-repeat;
+      opacity: 0.03; filter: blur(1px);
+      animation: pulse 5s infinite alternate; z-index: 2;
+    }
+    @keyframes pulse {
+      from { opacity: 0.02; } to { opacity: 0.05; }
     }
 
-    nav a {
-      margin-left: 1.5rem;
-      color: #00ffae;
-      text-decoration: none;
-      font-weight: bold;
+    /* Particles */
+    #particles { position: fixed; inset: 0; pointer-events: none; z-index: 3; }
+
+    /* Box Assembly */
+    #boxes { position: fixed; inset: 0; pointer-events: none; z-index: 4; }
+
+    /* Falling Boxes */
+    #fall { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+
+    /* Real-Box SVGs */
+    .box-icon {
+      position: fixed;
+      width: 80px; height: 80px;
+      stroke: rgba(255,255,255,0.05);
+      fill: none;
+      animation: float-icon 40s infinite ease-in-out;
+      z-index: 6;
+    }
+    @keyframes float-icon {
+      0%   { transform: translate(0,0) rotate(0deg); }
+      50%  { transform: translate(50px,-50px) rotate(10deg); }
+      100% { transform: translate(0,0) rotate(0deg); }
     }
 
-    .hero {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 4rem 2rem;
-      flex-wrap: wrap;
-    }
-
-    .hero-text {
-      max-width: 600px;
-    }
-
-    .hero-text h1 {
-      font-size: 2.5rem;
-    }
-
-    .highlight {
-      background-color: var(--accent-blue);
-      padding: 0.2rem 0.5rem;
-      border-radius: var(--rounded);
-      color: white;
-    }
-
-    .cta-buttons {
-      margin-top: 2rem;
-    }
-
-    .cta-buttons button {
-      padding: 1rem 2rem;
-      margin-right: 1rem;
-      border: none;
-      border-radius: var(--rounded);
-      font-weight: bold;
-      cursor: pointer;
-      transition: background var(--transition-speed);
-    }
-
-    .start-button {
-      background: white;
-      color: #000;
-    }
-
-    .results-button {
-      background: transparent;
-      color: white;
-      border: 2px solid white;
-    }
-
-    .video-preview {
-      max-width: 500px;
-      border-radius: var(--rounded);
-      overflow: hidden;
-    }
-
-    .features {
-      background: var(--bg-light);
-      color: black;
-      padding: 4rem 2rem;
-    }
-
-    .features h2 {
+    /* Centered Text */
+    .container {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      z-index: 7;
+      width: 90%; max-width: 440px;
       text-align: center;
-      font-size: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .feature-box {
-      background: white;
-      border-radius: var(--rounded);
+      color: var(--text-light);
       padding: 2rem;
-      margin: 1rem auto;
-      max-width: 800px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      /* no background box */
     }
 
-    .collapsible {
-      cursor: pointer;
-      padding: 1rem 0;
-      font-weight: bold;
+    /* Logo Glow */
+    .logo {
+      width: 120px; margin: 0 auto 1.5rem; display: block;
+      animation: glow 3s infinite alternate ease-in-out;
+    }
+    @keyframes glow {
+      from { filter: drop-shadow(0 0 4px rgba(255,255,255,0.4)); }
+      to   { filter: drop-shadow(0 0 16px rgba(255,255,255,0.7)); }
     }
 
-    .content {
-      display: none;
-      padding: 1rem 0;
-    }
+    h1 { font-size: 2.5rem; margin-bottom: .75rem; line-height: 1.2; }
+    p  { margin-bottom: 1.5rem; line-height: 1.4; opacity: 0.85; }
 
-    .active + .content {
-      display: block;
+    .btn {
+      display: inline-block; padding: .75rem 1.5rem;
+      background: transparent; color: var(--text-light);
+      border: 2px solid var(--text-light);
+      border-radius: var(--radius); font-weight: 600;
+      text-decoration: none;
+      transition: transform .2s, background .3s;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.1);
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Go Galactic</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Get in touch</a>
-      <a href="#">About/Mission</a>
-    </nav>
-  </header>
 
-  <section class="hero">
-    <div class="hero-text">
-      <h1>We <span class="highlight">partner</span> with packaging business owners at every stage of their journey</h1>
-      <p>"You build the perfect product, we build the acquisition department that gets perfect customers at 25:1 ROI"</p>
-      <div class="cta-buttons">
-        <button class="start-button">Start Growing</button>
-        <button class="results-button">See Our Results</button>
-      </div>
-    </div>
-    <div class="video-preview">
-      <img src="video-thumbnail.jpg" alt="Video" style="width: 100%" />
-    </div>
-  </section>
+  <!-- Background Layers -->
+  <div class="fog-container"><div class="fog-blob"></div></div>
+  <div class="circuit"></div>
+  <canvas id="particles"></canvas>
+  <canvas id="boxes"></canvas>
+  <canvas id="fall"></canvas>
 
-  <section class="features">
-    <h2>A simple, yet effective five step process</h2>
-    <div class="feature-box">
-      <div class="collapsible" onclick="toggleCollapse(this)">1. New Offer Model</div>
-      <div class="content">
-        <p>We’ll upgrade your offer to attract high-paying long-term clients. Then we’ll help you structure high-value 12-month deals.</p>
-      </div>
-    </div>
-    <div class="feature-box">
-      <div class="collapsible" onclick="toggleCollapse(this)">2. Automate Customer Acquisition</div>
-      <div class="content">
-        <p>Our automation system handles your acquisition while you scale operations and quality.</p>
-      </div>
-    </div>
-    <!-- Add more collapsible sections if needed -->
-  </section>
+  <!-- Real-Box SVGs -->
+  <svg class="box-icon" style="top: 15%; left: 10%; animation-delay: 0s;" viewBox="0 0 100 100">
+    <rect x="10" y="10" width="80" height="80"/>
+    <line x1="10" y1="10" x2="90" y2="90"/>
+    <line x1="90" y1="10" x2="10" y2="90"/>
+  </svg>
+  <svg class="box-icon" style="top: 60%; left: 20%; animation-delay: 10s;" viewBox="0 0 100 100">
+    <rect x="10" y="10" width="80" height="80"/>
+    <line x1="10" y1="10" x2="90" y2="90"/>
+    <line x1="90" y1="10" x2="10" y2="90"/>
+  </svg>
+  <svg class="box-icon" style="top: 40%; left: 75%; animation-delay: 20s;" viewBox="0 0 100 100">
+    <rect x="10" y="10" width="80" height="80"/>
+    <line x1="10" y1="10" x2="90" y2="90"/>
+    <line x1="90" y1="10" x2="10" y2="90"/>
+  </svg>
+
+  <!-- Centered Content -->
+  <div class="container">
+    <img src="assets/Go Galactic Logo.png" alt="Go Galactic Logo" class="logo" />
+    <h1>We’ll Be Right Back</h1>
+    <p>
+      Go Galactic is getting an AI-powered upgrade!<br />
+      Hang tight—we’re launching a futuristic experience for packaging businesses soon.
+    </p>
+    <a href="mailto:ali@galactly.com" class="btn">Contact Us</a>
+  </div>
 
   <script>
-    function toggleCollapse(el) {
-      el.classList.toggle('active');
+  // Particles: slow white shimmer
+  (function(){
+    const c = document.getElementById('particles'),
+          ctx = c.getContext('2d');
+    let w,h, particles = [];
+    function init(){
+      w = c.width = innerWidth; h = c.height = innerHeight;
+      particles = Array.from({length:80}, () => ({
+        x:Math.random()*w,
+        y:Math.random()*h,
+        size:Math.random()*1.5+0.5,
+        vx:(Math.random()-0.5)*0.15,
+        vy:(Math.random()-0.5)*0.15
+      }));
     }
+    function animate(){
+      ctx.clearRect(0,0,w,h);
+      particles.forEach(p => {
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0||p.x>w) p.vx*=-1;
+        if(p.y<0||p.y>h) p.vy*=-1;
+        ctx.fillStyle='rgba(255,255,255,0.2)';
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,2*Math.PI); ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    }
+    window.addEventListener('resize', init);
+    init(); animate();
+  })();
+
+  // Box Assembly: merge on collision
+  (function(){
+    const c = document.getElementById('boxes'),
+          ctx = c.getContext('2d');
+    let w,h, boxes = [];
+    function initBoxes(){
+      w = c.width = innerWidth; h = c.height = innerHeight;
+      boxes = Array.from({length:20}, () => {
+        const s = 30 + Math.random()*20;
+        return { x:Math.random()*(w-s), y:Math.random()*(h-s),
+                 w:s, h:s,
+                 vx:(Math.random()-0.5)*0.2,
+                 vy:(Math.random()-0.5)*0.2 };
+      });
+    }
+    function merge(i,j){
+      const A=boxes[i], B=boxes[j],
+            nx=Math.min(A.x,B.x), ny=Math.min(A.y,B.y),
+            nw=Math.max(A.x+A.w,B.x+B.w)-nx,
+            nh=Math.max(A.y+A.h,B.y+B.h)-ny;
+      boxes.splice(j,1); boxes.splice(i,1);
+      boxes.push({x:nx,y:ny,w:nw,h:nh,vx:0.05,vy:0.05});
+    }
+    function animateBoxes(){
+      ctx.clearRect(0,0,w,h);
+      boxes.forEach(b => {
+        b.x+=b.vx; b.y+=b.vy;
+        if(b.x<0||b.x+b.w>w) b.vx*=-1;
+        if(b.y<0||b.y+b.h>h) b.vy*=-1;
+        ctx.strokeStyle='rgba(255,255,255,0.04)';
+        ctx.lineWidth=2; ctx.strokeRect(b.x,b.y,b.w,b.h);
+      });
+      for(let i=0;i<boxes.length;i++){
+        for(let j=i+1;j<boxes.length;j++){
+          const A=boxes[i], B=boxes[j];
+          if(A.x < B.x+B.w && A.x+A.w > B.x && A.y < B.y+B.h && A.y+A.h > B.y){
+            merge(i,j); i=0; break;
+          }
+        }
+      }
+      requestAnimationFrame(animateBoxes);
+    }
+    window.addEventListener('resize', initBoxes);
+    initBoxes(); animateBoxes();
+  })();
+
+  // Falling Boxes: spawn and drop
+  (function(){
+    const c = document.getElementById('fall'),
+          ctx = c.getContext('2d');
+    let w,h, drops = [];
+    function initFall(){
+      w = c.width = innerWidth; h = c.height = innerHeight;
+      drops = [];
+    }
+    function animateFall(){
+      ctx.clearRect(0,0,w,h);
+      if(Math.random()<0.03){
+        const size = 8 + Math.random()*12;
+        drops.push({ x:Math.random()*(w-size), y:-size, size, vy:0.3+Math.random()*0.3 });
+      }
+      drops.forEach((d,i) => {
+        d.y += d.vy;
+        ctx.strokeStyle='rgba(255,255,255,0.04)';
+        ctx.strokeRect(d.x,d.y,d.size,d.size);
+        if(d.y>h) drops.splice(i,1);
+      });
+      requestAnimationFrame(animateFall);
+    }
+    window.addEventListener('resize', initFall);
+    initFall(); animateFall();
+  })();
   </script>
 </body>
 </html>
+
