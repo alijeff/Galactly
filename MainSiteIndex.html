@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go Galactic — Transfusion AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="logo">
+      <button id="homeBtn" aria-label="Home">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden>
+          <path d="M60 18 L98 86 H22 Z" fill="none" stroke="white" stroke-width="4" stroke-linejoin="round" opacity="0.98"/>
+          <path d="M60 32 L86 78 H34 Z" fill="none" stroke="white" stroke-width="6" stroke-linejoin="round" opacity="0.85"/>
+          <path d="M60 46 L74 70 H46 Z" fill="none" stroke="white" stroke-width="6" stroke-linejoin="round" opacity="0.45"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav role="navigation" aria-label="Main nav">
+      <div class="nav-item"><a class="link" href="#process">Process</a></div>
+      <div class="nav-item"><a class="link" href="#ai">AI Hub</a></div>
+      <div class="nav-item"><a class="link" href="#power">See its Power</a></div>
+
+      <div class="nav-item dropdown" id="companyMenu">
+        <a class="link" href="#company">Company ▾</a>
+        <div class="dropdown-list" id="companyList" role="menu">
+          <a href="about.html">About Us</a>
+          <a href="careers.html">Careers</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="cta">
+      <button class="btn-top" id="topGet">Get Started</button>
+      <button class="hamburger" id="hambtn" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="hero" class="hero section-wrap" aria-label="Hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <h1 class="hero-title">Transfusion — Power your packaging growth with private AI</h1>
+      <p class="hero-sub">Build a self-hosted AI that finds high-intent buyers, writes personalized outreach and closes deals — automatically. Deploy once, improve forever.</p>
+
+      <div class="hero-ctas">
+        <button class="btn-primary" id="heroGet">Get Started</button>
+        <button class="btn-ghost" onclick="location.href='#process'">See Process</button>
+      </div>
+
+      <p class="hero-tagline">“Build once — let it learn faster than any salesperson and improve thousands of business metrics continuously.”</p>
+    </div>
+
+    <div class="hero-right" aria-hidden="false">
+      <div class="hero-flow" role="img" aria-label="Animated AI workflow visualization">
+        <canvas id="heroFlowCanvas" width="560" height="380" style="width:100%;height:100%;display:block"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI HUB -->
+<section id="ai" class="ai-hub section-wrap">
+  <div class="hub-inner">
+    <aside class="hub-left">
+      <div class="tabs">
+        <button class="tab active" data-key="manager">Manager AI</button>
+        <button class="tab" data-key="acq">Acquisition AI</button>
+        <button class="tab" data-key="ret">Retention AI</button>
+      </div>
+
+      <div class="details" id="aiDetails">
+        <h3 id="aiTitleSmall">Manager AI</h3>
+        <p id="aiDesc">Central orchestration; supervises Acquisition & Retention, reweights KPIs and thresholds in realtime.</p>
+
+        <div class="metrics-grid">
+          <div class="m"><div class="m-val" id="ma1">98%</div><div class="m-label">Model uptime</div></div>
+          <div class="m"><div class="m-val" id="ma2">1.8s</div><div class="m-label">Avg response</div></div>
+          <div class="m"><div class="m-val" id="ma3">6.2x</div><div class="m-label">Avg ROI</div></div>
+        </div>
+
+        <div class="ai-actions">
+          <button class="primary" id="openManager">Open Manager</button>
+          <button id="openAcq">Open Acquisition</button>
+          <button id="openRet">Open Retention</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="hub-right">
+      <div class="cluster-wrap">
+        <canvas id="clusterCanvas" class="cluster-canvas"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="section-wrap">
+    <p>© 2025 Go Galactic Growth Partner Ltd.</p>
+  </div>
+</footer>
+
+<script src="js/ui.js"></script>
+<script src="js/heroFlow.js"></script>
+<script src="js/cluster.js"></script>
+</body>
+</html>
